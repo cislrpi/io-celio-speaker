@@ -41,34 +41,27 @@ export class Speaker {
   }
 
   /**
-   * Clear the speaker-worker cache
-   */
-  public clearCache(): void {
-    this.rabbit.publishTopic('speaker.command.cache.clear', '');
-  }
-
-  /**
    * Change the speaker volume by some percentage.
    * @param {number} [change] - The change percentage amount.
    */
-  public changeVolume(change: number): void {
-    this.rabbit.publishTopic('speaker.command.volume.change', { change });
+  public changeVolume(change: number): Promise<RabbitMessage> {
+    return this.rabbit.publishRpc('rpc-speaker-changeVolume', { change });
   }
 
   /**
    * Increase speaker volume by some percentage.
    * @param  {number} [change=20] - The change percentage amount.
    */
-  public increaseVolume(change = 20): void {
-    this.changeVolume(change);
+  public increaseVolume(change = 20): Promise<RabbitMessage> {
+    return this.changeVolume(change);
   }
 
   /**
    * Reduce speaker volume by some percentage.
    * @param  {number} [change=20] - The change percentage amount.
    */
-  public reduceVolume(change = 20): void {
-    this.changeVolume(-change);
+  public reduceVolume(change = 20): Promise<RabbitMessage> {
+    return this.changeVolume(-change);
   }
 
   /**
@@ -80,11 +73,11 @@ export class Speaker {
   }
 
   public beginSpeak(msg: Record<string, unknown>): void {
-    this.rabbit.publishTopic('speaker.speak.begin', msg);
+    this.rabbit.publishTopic('begin.speak', msg);
   }
 
   public endSpeak(msg: Record<string, unknown>): void {
-    this.rabbit.publishTopic('speaker.speak.end', msg);
+    this.rabbit.publishTopic('end.speak', msg);
   }
 
   /**
@@ -92,7 +85,7 @@ export class Speaker {
    * @param  {speakSubscriptionCallback} handler - The callback for handling the speaking events.
    */
   public onBeginSpeak(handler: SpeakSubscriptionCallback): void {
-    this.rabbit.onTopic('speaker.speak.begin', (message): void => {
+    this.rabbit.onTopic('begin.speak', (message): void => {
       handler(message);
     });
   }
@@ -102,7 +95,7 @@ export class Speaker {
    * @param  {speakSubscriptionCallback} handler - The callback for handling the speaking events.
    */
   public onEndSpeak(handler: SpeakSubscriptionCallback): void {
-    this.rabbit.onTopic('speaker.speak.end', (message): void => {
+    this.rabbit.onTopic('end.speak', (message): void => {
       handler(message);
     });
   }

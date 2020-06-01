@@ -1,7 +1,7 @@
 {
-  "name": "@cisl/io-speaker",
-  "version": "1.0.0-dev.2",
-  "description": "Plugin for @cisl/io for interop with speaker-worker",
+  "name": "@cisl/io-celio-speaker",
+  "version": "1.0.0-dev.1",
+  "description": "Plugin for @cisl/io for interop with speaker-worker using legacy celio topics/queues",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
@@ -22,7 +22,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/cislrpi/io-speaker"
+    "url": "https://github.com/cislrpi/io-celio-speaker"
   },
   "publishConfig": {
     "access": "public"
