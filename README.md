@@ -1,3 +1,5 @@
+__Note__: This repo has been merged into larger the [`@cisl/io`](https://github.com/cislrpi/io) monorepo.
+
 @cisl/io-celio-speaker
 ===================
 
